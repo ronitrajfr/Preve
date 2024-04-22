@@ -23,9 +23,9 @@ model User {
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    imageUrl  String
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-    @@index([imageUrl])
+  id          Int      @id @default(autoincrement())
+  imageUrl    String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById String
+  @@index([imageUrl])
 }
