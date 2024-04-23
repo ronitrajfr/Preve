@@ -1,12 +1,12 @@
 "use client";
 
-import { Sidebar } from "@/components/sidebar/Sidebar";
+import { DefaultSidebar } from "@/components/sidebar/Sidebar";
 import { UploadButton } from "@/utils/uploadthing";
 
 export default function Home() {
   return (
     <main className="bg-slate-900 h-screen flex">
-      <Sidebar />
+      <DefaultSidebar />
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
