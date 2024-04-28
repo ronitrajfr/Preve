@@ -10,7 +10,6 @@ datasource db {
 
 model User {
   id       String @id @default(uuid())
-  clerkId   String @default(cuid()) @unique
   firstName String
   lastName String
   email    String
@@ -20,7 +19,6 @@ model User {
 model Post {
   id          Int      @id @default(autoincrement())
   imageUrl    String
-  createdBy   User   @relation(fields: [createdById], references: [clerkId])
+  createdBy   User   @relation(fields: [createdById], references: [id])
   createdById String
-  @@index([imageUrl])
 }

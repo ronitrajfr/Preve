@@ -1,6 +1,6 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { WebhookEvent, clerkClient } from "@clerk/nextjs/server";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType == "user.created") {
-    const { id, first_name, last_name, email_addresses } = evt.data;
+    const { first_name, last_name, email_addresses } = evt.data;
     if (first_name == null) {
       return;
     }
@@ -71,6 +71,15 @@ export async function POST(req: Request) {
           email: email_addresses[0].email_address,
         },
       });
+
+      if (newUser) {
+        await clerkClient.users.updateUserMetadata(newUser.id, {
+          publicMetadata: {
+            id,
+          },
+        });
+      }
+
       return NextResponse.json({ message: "OK", user: newUser });
     } catch (error) {
       console.error(error);
