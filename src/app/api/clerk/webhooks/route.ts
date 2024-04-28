@@ -3,6 +3,8 @@ import { headers } from "next/headers";
 import { WebhookEvent, clerkClient } from "@clerk/nextjs/server";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
@@ -55,35 +57,29 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
-  if (eventType == "user.created") {
-    const { first_name, last_name, email_addresses } = evt.data;
-    if (first_name == null) {
-      return;
-    }
-    if (last_name == null) {
-      return;
-    }
-    try {
-      const newUser = await prisma.user.create({
-        data: {
-          firstName: first_name,
-          lastName: last_name,
-          email: email_addresses[0].email_address,
-        },
-      });
+  if (eventType === "user.created") {
+    const { id, first_name, last_name, email_addresses } = evt.data;
 
-      const userKaID = newUser.id;
+    if (first_name == null) return;
+    if (last_name == null) return;
 
-      await clerkClient.users.updateUserMetadata(userKaID, {
+    const newUser = await prisma.user.create({
+      data: {
+        userId: id,
+        firstName: first_name,
+        lastName: last_name,
+        email: email_addresses[0].email_address,
+      },
+    });
+    if (newUser) {
+      await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userKaID,
+          userId: newUser.id,
         },
       });
-
-      return NextResponse.json({ message: "OK", user: newUser });
-    } catch (error) {
-      console.error(error);
     }
+
+    return NextResponse.json({ message: "OK", user: newUser });
   }
 
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
