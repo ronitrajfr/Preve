@@ -72,13 +72,13 @@ export async function POST(req: Request) {
         },
       });
 
-      if (newUser) {
-        await clerkClient.users.updateUserMetadata(newUser.id, {
-          publicMetadata: {
-            id,
-          },
-        });
-      }
+      const userKaID = newUser.id;
+
+      await clerkClient.users.updateUserMetadata(userKaID, {
+        publicMetadata: {
+          userKaID,
+        },
+      });
 
       return NextResponse.json({ message: "OK", user: newUser });
     } catch (error) {
