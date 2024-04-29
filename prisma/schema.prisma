@@ -7,19 +7,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id       String @id @default(uuid())
-  userId    String      @unique
+  id        String      @id @default(cuid())
+  userId    String   @unique
   firstName String
-  lastName String
-  email    String
-  posts    Post[]
+  lastName  String
+  email     String
+  posts     Post[]
+  chats     Chat[]
 }
 
 model Post {
   id          Int      @id @default(autoincrement())
   imageUrl    String
-  createdBy   User   @relation(fields: [createdById], references: [id])
+  content     String?
+  createdBy   User     @relation(fields: [createdById], references: [id])
   createdById String
+  chat        Chat[]
+}
+
+model Chat {
+  id          Int      @id @default(autoincrement())
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+  post        Post     @relation(fields: [postId], references: [id])
+  postId      Int
+  message     Message[]
+}
+
+model Message {
+  id     Int   @id @default(autoincrement())
+  content String
+  chat   Chat  @relation(fields: [chatId], references: [id])
+  chatId Int
 }
