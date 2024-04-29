@@ -8,15 +8,15 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   try {
-    const pdfText = await readPdfText({
-      url: body.imageUrl, // Adjust the file name if needed
-    });
+    // const pdfText = await readPdfText({
+    //   url: body.imageUrl, // Adjust the file name if needed
+    // });
 
     const newPost = await prisma.post.create({
       data: {
         createdById: body.userId,
         imageUrl: body.imageUrl,
-        content: pdfText,
+        content: "just for testing",
       },
     });
     return NextResponse.json({ newPost });
