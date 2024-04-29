@@ -24,6 +24,7 @@
     "pdf-parse": "^1.1.1",
     "pdf-parse-fork": "^1.2.0",
     "pdf-text-reader": "^4.0.1",
+    "pdfjs-dist": "^4.1.392",
     "prisma": "^5.12.1",
     "react": "^18",
     "react-dom": "^18",

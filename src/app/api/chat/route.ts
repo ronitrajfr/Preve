@@ -1,34 +1,61 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { readPdfText } from "pdf-text-reader";
-import axios from "axios"; // Import axios for making HTTP requests
+import pdfParse from "pdf-parse";
+import axios from "axios";
 const prisma = new PrismaClient();
 
-function delay(ms: any) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const { imageUrl, userId } = await req.json();
 
   try {
-    const pdfText = await readPdfText({
-      url: body.imageUrl, // Adjust the file name if needed
-    });
+    // Fetch PDF content
+    const pdfContent = await fetchPdfContent(imageUrl);
 
-    // Add a delay of 5 seconds before making the database call
-    await delay(5000);
+    // Store data in the database
+    await savePdfData(imageUrl, userId, pdfContent);
 
-    const newPost = await prisma.post.create({
-      data: {
-        createdById: body.userId,
-        imageUrl: body.imageUrl,
-        content: pdfText, // Store the parsed text from the PDF
-      },
+    // Respond with success message and userId
+    return NextResponse.json({
+      message: "PDF data saved successfully",
+      userId,
     });
-    return NextResponse.json({ newPost });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error });
+    console.error("Error:", error);
+    return NextResponse.json({ message: "Internal Server Error" });
   }
+}
+
+async function fetchPdfContent(imageUrl: string) {
+  try {
+    // Fetch the PDF file using Axios
+    const response = await axios.get(imageUrl, {
+      responseType: "arraybuffer", // Ensure response type is set to arraybuffer
+    });
+
+    // Parse the PDF content
+    const data = await pdfParse(response.data);
+
+    // Extract text content from the parsed data
+    const textContent = data.text;
+
+    return textContent;
+  } catch (error) {
+    console.error("Error fetching PDF content:", error);
+    throw new Error("Failed to fetch PDF content");
+  }
+}
+
+async function savePdfData(
+  imageUrl: string,
+  userId: string,
+  pdfContent: string
+) {
+  // Save data in the database using Prisma
+  await prisma.post.create({
+    data: {
+      imageUrl: imageUrl,
+      createdById: userId,
+      content: pdfContent,
+    },
+  });
 }

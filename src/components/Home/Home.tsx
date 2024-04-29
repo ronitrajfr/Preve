@@ -14,7 +14,7 @@ export const Home = () => {
       <DefaultSidebar />
       <UploadDropzone
         endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
+        onClientUploadComplete={(res: any) => {
           // Do something with the response
           console.log("Files: ", res);
           axios.post("https://presolve.vercel.app/api/chat", {
