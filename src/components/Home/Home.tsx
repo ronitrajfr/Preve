@@ -15,13 +15,17 @@ export const Home = () => {
       <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res: any) => {
-          // Do something with the response
           console.log("Files: ", res);
-          axios.post("https://presolve.vercel.app/api/chat", {
-            userId: user?.publicMetadata.userId,
-            imageUrl: res[0].url,
-          });
-          alert("Upload Completed");
+          const data = axios
+            .post("https://presolve.vercel.app/api/chat", {
+              userId: user?.publicMetadata.userId,
+              imageUrl: res[0].url,
+            })
+            .then((response) => {
+              console.log(response);
+              alert("file uploaded");
+            });
+          console.log(data);
         }}
         onUploadError={(error: Error) => {
           // Do something with the error.
