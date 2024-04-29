@@ -1,7 +1,7 @@
 "use client";
 
 import { DefaultSidebar } from "@/components/sidebar/Sidebar";
-import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { useUser } from "@clerk/clerk-react";
 
 import axios from "axios";
@@ -12,7 +12,7 @@ export const Home = () => {
   return (
     <main className=" h-screen flex">
       <DefaultSidebar />
-      <UploadButton
+      <UploadDropzone
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           // Do something with the response
