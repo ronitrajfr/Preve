@@ -20,10 +20,11 @@ export const Home = () => {
           const newPost = axios
             .post("/api/chat", {
               imageUrl: res[0].url,
-              userId: user?.publicMetadata.userID,
+              userId: user?.publicMetadata.userId,
             })
             .then((response) => {
               console.log(response.data);
+              alert("uploaded successfully");
             })
             .catch((error) => {
               console.log(error);
