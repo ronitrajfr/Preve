@@ -14,30 +14,29 @@ model User {
   lastName  String
   email     String
   posts     Post[]
-  chats     Chat[]
+  //chats     Chat[]
 }
 
 model Post {
   id          Int      @id @default(autoincrement())
   imageUrl    String
-  content     String?
+  content     String
   createdBy   User     @relation(fields: [createdById], references: [id])
   createdById String
-  chat        Chat[]
 }
 
-model Chat {
-  id          Int      @id @default(autoincrement())
-  createdBy   User     @relation(fields: [createdById], references: [id])
-  createdById String
-  post        Post     @relation(fields: [postId], references: [id])
-  postId      Int
-  message     Message[]
-}
+// model Chat {
+//   id          Int      @id @default(autoincrement())
+//   createdBy   User     @relation(fields: [createdById], references: [id])
+//   createdById String
+//   post        Post     @relation(fields: [postId], references: [id])
+//   postId      Int
+//   message     Message[]
+// }
 
-model Message {
-  id     Int   @id @default(autoincrement())
-  content String
-  chat   Chat  @relation(fields: [chatId], references: [id])
-  chatId Int
-}
+// model Message {
+//   id     Int   @id @default(autoincrement())
+//   content String
+//   chat   Chat  @relation(fields: [chatId], references: [id])
+//   chatId Int
+// }

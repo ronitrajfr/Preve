@@ -16,20 +16,23 @@ export const Home = () => {
         endpoint="imageUploader"
         onClientUploadComplete={(res: any) => {
           console.log("Files: ", res);
-          const data = axios
-            .post("https://presolve.vercel.app/api/chat", {
-              userId: user?.publicMetadata.userId,
+          alert("uploaded completed");
+          const newPost = axios
+            .post("/api/chat", {
               imageUrl: res[0].url,
+              userId: user?.publicMetadata.userID,
             })
             .then((response) => {
-              console.log(response);
-              alert("file uploaded");
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.log(error);
             });
-          console.log(data);
         }}
         onUploadError={(error: Error) => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
+          console.log(error);
         }}
       />
     </main>
