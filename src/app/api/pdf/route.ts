@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { readPdfText } from "pdf-text-reader";
 
 export async function POST(req: NextRequest) {
-  const { name, url } = await req.json();
+  const { name, url, userId } = await req.json();
 
   try {
     const content = await readPdfText({
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
         url,
         name,
         content,
+        createdById: userId,
       },
     });
 
