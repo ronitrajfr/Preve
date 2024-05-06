@@ -13,8 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String      @id @default(cuid())
+  userId    String   @unique
+  firstName String
+  lastName  String
+  email     String
+  pdf     Pdf[]
+  //chats     Chat[]
+}
+
 model Pdf {
   id String @id @unique @default(cuid())
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
   name String
   url  String
   content String
