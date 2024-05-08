@@ -2,12 +2,14 @@
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { UploadButton } from "@/utils/uploadthing";
+import { Navbar } from "./tools/Navbar";
 
 export default function Home() {
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="">
+      <Navbar />
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
