@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
-import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { Navbar } from "./tools/Navbar";
 
 export default function Home() {
@@ -10,7 +10,22 @@ export default function Home() {
   return (
     <main className="">
       <Navbar />
-      <UploadButton
+      <UploadDropzone
+        appearance={{
+          container: {
+            border: "1px solid red",
+          },
+          uploadIcon: {
+            color: "orange",
+          },
+          button: {
+            background: "red",
+          },
+          label: {
+            color: "red",
+          },
+        }}
+        className="mt-72 max-sm:mt-60 mx-auto w-[70vh] "
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           // Do something with the response

@@ -1,12 +1,12 @@
 import React from "react";
-
+import Image from "next/image";
 export const Navbar = () => {
   return (
     <div className="flex justify-center">
       <div className="absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[48rem]">
         <div>
-          <a id="cq2-main-logo" href="/">
-            <h1 className="text-3xl font-medium">Pre</h1>
+          <a id="logo" href="/">
+            <Image src={"/preve.png"} alt="logo" width={60} height={60} />
           </a>
         </div>
         <div className="flex flex-row">
