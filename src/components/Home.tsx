@@ -5,7 +5,7 @@ import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { Navbar } from "./tools/Navbar";
 
 export default function Home() {
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { user } = useUser();
 
   return (
     <main className="">
