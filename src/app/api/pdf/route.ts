@@ -25,18 +25,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error }, { status: 400 });
   }
 }
-
-export async function GET(req: NextRequest) {
-  const { userId } = await req.json();
-
-  try {
-    const allPdf = await prisma.pdf.findMany({
-      where: {
-        createdById: userId,
-      },
-    });
-    return NextResponse.json({ allPdf }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error }, { status: 400 });
-  }
-}
