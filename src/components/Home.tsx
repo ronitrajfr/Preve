@@ -38,7 +38,11 @@ export default function Home() {
             })
             .then((response) => {
               console.log(response);
-              alert("uploaded");
+              if (response.data.msg) {
+                alert("Unable to parse the PDF");
+              } else {
+                alert("PDF uploaded successfully");
+              }
             })
             .catch((error) => {
               console.log(error);

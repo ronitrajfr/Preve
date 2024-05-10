@@ -11,6 +11,10 @@ export async function POST(req: NextRequest) {
     });
     console.log(content);
 
+    if (content === "") {
+      return NextResponse.json({ msg: "Unable to parse the Pdf" });
+    }
+
     const newPdf = await prisma.pdf.create({
       data: {
         url,
