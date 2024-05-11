@@ -1,6 +1,7 @@
 import prisma from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
+import Link from "next/link";
 import { Navbar } from "./tools/Navbar";
 
 async function fetchData() {
@@ -52,10 +53,11 @@ export async function Projects() {
                 <div className="mx-4 mt-3">{truncatedContent}</div>
                 <div className="flex items-center justify-center mt-3">
                   <a
-                    href="#"
+                    target="_blank"
+                    href={`/post/${data.id}`}
                     className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-orange-600 rounded-lg hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-600 "
                   >
-                    Read more
+                    Continue
                     <svg
                       className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                       aria-hidden="true"
