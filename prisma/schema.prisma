@@ -20,6 +20,7 @@ model User {
   lastName  String
   email     String
   pdf     Pdf[]
+  message Message[]
   //chats     Chat[]
 }
 
@@ -30,4 +31,14 @@ model Pdf {
   name String
   url  String
   content String
+  message Message[]
+}
+
+model Message {
+  id String @id @unique @default(cuid())
+  content  String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+  chat Pdf    @relation(fields: [chatId], references: [id])
+  chatId   String
 }
