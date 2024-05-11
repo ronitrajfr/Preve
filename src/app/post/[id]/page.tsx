@@ -27,6 +27,7 @@ async function getContent(id: string) {
 async function Page({ params }: { params: Params }) {
   // Now you can use `postId` in your component logic
   const res = await getContent(params.id);
+  // console.log(res?.content);
   if (params.id != res?.id) {
     redirect("/not_found");
   }
