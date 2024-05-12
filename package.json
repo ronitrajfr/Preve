@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.6",
+    "@google/generative-ai": "^0.11.1",
     "@prisma/client": "^5.13.0",
     "@uploadthing/react": "^6.5.1",
     "axios": "^1.6.8",
+    "lucide-react": "^0.378.0",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.17",
     "pdf-parse": "^1.1.1",
@@ -21,6 +23,7 @@
     "prisma": "^5.13.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^9.0.1",
     "svix": "^1.23.0",
     "uploadthing": "^6.10.1"
   },

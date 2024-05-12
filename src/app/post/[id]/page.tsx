@@ -33,22 +33,22 @@ async function Page({ params }: { params: Params }) {
   if (params.id != res?.id) {
     notFound();
   }
-  async function serverFuntion(e: any) {
-    "use server";
-    const user = await currentUser();
-    const userId = user?.publicMetadata.userId;
-    if (!userId) return;
-    const content = e.get("inputThing");
-    console.log(content);
-    const newMessage = await prisma.message.create({
-      data: {
-        content,
-        createdById: userId as string,
-        chatId: params.id,
-      },
-    });
-    console.log(newMessage);
-  }
+  // async function serverFuntion(e: any) {
+  //   "use server";
+  //   const user = await currentUser();
+  //   const userId = user?.publicMetadata.userId;
+  //   if (!userId) return;
+  //   const content = e.get("inputThing");
+  //   console.log(content);
+  //   const newMessage = await prisma.message.create({
+  //     data: {
+  //       content,
+  //       createdById: userId as string,
+  //       chatId: params.id,
+  //     },
+  //   });
+  //   console.log(newMessage);
+  // }
   return (
     <div className="flex flex-col h-screen justify-between">
       <Navbar />
@@ -69,15 +69,7 @@ async function Page({ params }: { params: Params }) {
         </div>
         {/* Your content here */}
       </div>
-      <form action={serverFuntion} className="flex justify-center mb-6">
-        <InputCom />
-        <button
-          type="submit"
-          className="bg-orange-400 text-white p-2.5 rounded-lg ml-2"
-        >
-          Send
-        </button>
-      </form>
+      <InputCom content={res?.content} />
     </div>
   );
 }
