@@ -11,4 +11,11 @@ export default async function sendToServer(e: any) {
   if (!userId) return;
   const content = e.get("inputThing");
   console.log(content);
+  // const newMessage = await prisma.message.create({
+  //   data: {
+  //     createdById: userId as string,
+  //     content,
+  //     chatId: pdfId,
+  //   },
+  // });
 }

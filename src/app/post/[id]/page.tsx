@@ -33,6 +33,26 @@ async function Page({ params }: { params: Params }) {
   if (params.id != res?.id) {
     notFound();
   }
+  async function serverFuntion(e: any) {
+    "use server";
+
+    const user = await currentUser();
+    const userId = user?.publicMetadata.userId;
+    if (!userId) return;
+
+    const content = e.get("inputThing");
+    console.log(content);
+
+    const newMessage = await prisma.message.create({
+      data: {
+        content,
+        createdById: userId as string,
+        chatId: params.id,
+      },
+    });
+
+    console.log(newMessage);
+  }
   return (
     <div className="flex flex-col h-screen justify-between">
       <Navbar />
@@ -53,7 +73,7 @@ async function Page({ params }: { params: Params }) {
         </div>
         {/* Your content here */}
       </div>
-      <form action={sendToServer} className="flex justify-center mb-6">
+      <form action={serverFuntion} className="flex justify-center mb-6">
         <InputCom />
         <button
           type="submit"
