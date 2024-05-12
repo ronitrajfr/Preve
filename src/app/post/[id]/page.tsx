@@ -35,14 +35,11 @@ async function Page({ params }: { params: Params }) {
   }
   async function serverFuntion(e: any) {
     "use server";
-
     const user = await currentUser();
     const userId = user?.publicMetadata.userId;
     if (!userId) return;
-
     const content = e.get("inputThing");
     console.log(content);
-
     const newMessage = await prisma.message.create({
       data: {
         content,
@@ -50,7 +47,6 @@ async function Page({ params }: { params: Params }) {
         chatId: params.id,
       },
     });
-
     console.log(newMessage);
   }
   return (

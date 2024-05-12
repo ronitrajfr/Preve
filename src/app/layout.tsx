@@ -18,6 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        type="image/x-icon"
+        href="https://preve.onrender.com/_next/image?url=%2Fpreve.png&w=64&q=75"
+      ></link>
       <ClerkProvider>
         <body className={inter.className}>{children}</body>
       </ClerkProvider>
