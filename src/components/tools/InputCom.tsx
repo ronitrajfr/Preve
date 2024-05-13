@@ -7,7 +7,7 @@ import {
 } from "@google/generative-ai";
 import Markdown from "react-markdown";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_APIKEY || "");
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 interface ConversationTurn {
@@ -91,6 +91,7 @@ export function InputCom({ content }: InputComProps): JSX.Element {
   return (
     <div className="mt-24">
       <center>
+        <h1>{process.env.NEXT_PUBLIC_APIKEY}</h1>
         <div className="w-[400px] md:w-[700px] px-4 md:px-0 text-left">
           {conversation.map((item, index) => (
             <div key={index} className="mt-7">
