@@ -36,7 +36,7 @@ export default function RootLayout({
         />
         <meta property="twitter:image:width" content="1200" />
         <meta property="twitter:image:height" content="595" />
-        <meta property="og:title" content="Visual Studio Code • Unofficial" />
+        <meta property="og:title" content="Preve" />
         <meta property="og:image" content="/og-image.png" />
         <meta
           property="og:description"
