@@ -88,6 +88,22 @@ export function InputCom({ content }: InputComProps): JSX.Element {
 
     setInput(""); // Clear input after sending
   };
+  async function handleKeyDown(e: any) {
+    if (e.key === "Enter") {
+      const newConversation: ConversationTurn[] = [
+        ...conversation,
+        { user: input, ai: null },
+      ]; // Add a placeholder for the AI response
+      setConversation(newConversation);
+
+      const response: string = await generateResponse(input);
+      const updatedConversation: ConversationTurn[] = [...newConversation];
+      updatedConversation[newConversation.length - 1].ai = response;
+      setConversation(updatedConversation);
+
+      setInput("");
+    }
+  }
   return (
     <div className="mt-24">
       <center>
@@ -119,6 +135,7 @@ export function InputCom({ content }: InputComProps): JSX.Element {
           <input
             type="text"
             value={input}
+            onKeyDown={handleKeyDown}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Start Chatting..."
             className=" shadow bg-gray-50 border-2 border-orange-400 text-black text-sm rounded-lg focus:border-orange-500 p-2.5 w-[400px] md:w-[700px] "
