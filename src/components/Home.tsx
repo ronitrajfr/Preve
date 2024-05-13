@@ -1,12 +1,13 @@
 "use client";
 import axios from "axios";
+import { redirect, useRouter } from "next/navigation";
 import { useUser } from "@clerk/clerk-react";
 import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { Navbar } from "./tools/Navbar";
 
 export default function Home() {
   const { user } = useUser();
-
+  const router = useRouter();
   return (
     <main className="">
       <Navbar />
@@ -37,10 +38,12 @@ export default function Home() {
               userId: user?.publicMetadata.userId,
             })
             .then((response) => {
-              console.log(response);
+              console.log(response?.data.newPdf.id);
+
               if (response.data.msg) {
                 alert("Unable to parse the PDF");
               } else {
+                router.push(`/post/${response.data.newPdf.id}`);
                 alert("PDF uploaded successfully");
               }
             })
