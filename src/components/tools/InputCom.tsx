@@ -1,143 +1,129 @@
 "use client";
+import React, { useState, useRef, useEffect } from "react";
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
-  ChatSession,
 } from "@google/generative-ai";
-import { useEffect, useState } from "react";
+
 const genAI = new GoogleGenerativeAI("YOUR_API_KEY");
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-export function InputCom({ content }: any) {
-  const [input, setinput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [chat, setchat] = useState<ChatSession | null>(null);
-  const [history, setHistory] = useState([
-    {
-      role: "model",
-      parts: "Great to meet you. Im Gemini, your chatbot.",
-    },
-  ]);
+interface ConversationTurn {
+  user: string;
+  ai: string | null;
+}
+
+interface InputComProps {
+  content: string;
+}
+
+export function InputCom({ content }: InputComProps): JSX.Element {
+  const [input, setInput] = useState<string>("");
+  const [conversation, setConversation] = useState<ConversationTurn[]>([]);
+  const conversationEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // the moment I felt , Im the GOD !
-    if (!chat) {
-      setchat(
-        model.startChat({
-          generationConfig: {
-            maxOutputTokens: 400,
-          },
-        })
-      );
+    if (conversationEndRef.current) {
+      conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [chat, model]);
+  }, [conversation]);
 
-  async function chatting() {
-    setLoading(true);
-    setHistory((oldHistory) => [
-      ...oldHistory,
-      {
-        role: "user",
-        parts: input,
-      },
-      {
-        role: "model",
-        parts: "Thinking...",
-      },
-    ]);
-    setinput("");
-    try {
-      const result = await chat?.sendMessage(input);
-      const response = await result?.response;
-      const text = response.text();
-      setLoading(false);
-      setHistory((oldHistory) => {
-        const newHistory = oldHistory.slice(0, oldHistory.length - 1);
-        newHistory.push({
-          role: "model",
-          parts: text,
-        });
-        return newHistory;
-      });
-    } catch (error) {
-      setHistory((oldHistory) => {
-        const newHistory = oldHistory.slice(0, oldHistory.length - 1);
-        newHistory.push({
-          role: "model",
-          parts: "Oops! Something went wrong.",
-        });
-        return newHistory;
-      });
-      setLoading(false);
-      console.log(error);
-      alert("Oops! Something went wrong.");
-    }
-  }
+  const generationConfig = {
+    temperature: 0.9,
+    topK: 1,
+    topP: 1,
+    maxOutputTokens: 2048,
+  };
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter") {
-      chatting();
-    }
-  }
+  const safetySettings = [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+      threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+    },
+  ];
 
-  function reset() {
-    setHistory([
-      {
-        role: "model",
-        parts: "Great to meet you. Im Gemini, your chatbot.",
-      },
-    ]);
-    setinput("");
-    setchat(null);
-  }
+  const generateResponse = async (userInput: string): Promise<string> => {
+    const parts = [
+      { text: `act as a genius and give an answer to this ${content}` },
+      { text: `input: ${userInput}` },
+      { text: "output: your response" },
+    ];
 
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts }],
+      generationConfig,
+      safetySettings,
+    });
+
+    const responseText: string =
+      result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    return responseText;
+  };
+
+  const handleSend = async (): Promise<void> => {
+    const newConversation: ConversationTurn[] = [
+      ...conversation,
+      { user: input, ai: null },
+    ]; // Add a placeholder for the AI response
+    setConversation(newConversation);
+
+    const response: string = await generateResponse(input);
+    const updatedConversation: ConversationTurn[] = [...newConversation];
+    updatedConversation[newConversation.length - 1].ai = response;
+    setConversation(updatedConversation);
+
+    setInput(""); // Clear input after sending
+  };
   return (
-    <div>
-      {history.map((item, index) => (
-        <div
-          key={index}
-          className={`chat ${
-            item.role === "model" ? "chat-start" : "chat-end"
-          }`}
-        >
-          <div className="chat-image avatar">
-            <div className="w-6 md:w-10 rounded-full"></div>
-          </div>
-          <div className="chat-header mx-2 font-semibold opacity-80">
-            {item.role === "model" ? "Gemini" : "You"}
-          </div>
-          <div
-            className={`chat-bubble font-medium ${
-              item.role === "model" ? "chat-bubble-primary" : ""
-            }`}
-          >
-            <h1>{item.parts}</h1>
-          </div>
+    <div className="mt-24">
+      <center>
+        <div className="w-[800px] text-left">
+           
+          {conversation.map((item, index) => (
+            <div key={index}>
+                         {" "}
+              {(index !== 0 || item.user !== "") && <p>User: {item.user}</p>}   
+                      {item.ai !== null && <p>AI: {item.ai}</p>}           {" "}
+              {index === conversation.length - 1 && item.ai === null && (
+                <p>Loading...</p>
+              )}
+                       {" "}
+            </div>
+          ))}
+          <div ref={conversationEndRef}></div>
         </div>
-      ))}
-      <textarea
-        value={input}
-        required
-        rows={1}
-        onKeyDown={handleKeyDown}
-        onChange={(e) => setinput(e.target.value)}
-        placeholder="Start Chatting..."
-        className="textarea backdrop-blur textarea-primary w-full mx-auto bg-opacity-60 font-medium shadow rounded-3xl"
-      />
-      <button
-        className={`btn rounded-3xl shadow-md ${
-          loading ? "btn-accent cursor-wait pointer-events-none" : "btn-primary"
-        }`}
-        title="send"
-        onClick={chatting}
-      >
-        {loading ? (
-          <span className="loading loading-spinner loading-sm"></span>
-        ) : (
-          <div>send</div>
-        )}
-      </button>
+      </center>
+      <center>
+        <div className="px-4 pt-4 mx-auto">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Start Chatting..."
+            className=" shadow bg-gray-50 border-2 border-orange-400 text-black text-sm rounded-lg focus:border-orange-500 p-2.5 w-[800px]"
+            style={{ marginBottom: "10px" }}
+          />
+          <button
+            onClick={handleSend}
+            className="bg-orange-400 text-white p-2.5 rounded-lg ml-2"
+          >
+            Send
+          </button>
+        </div>
+      </center>
     </div>
   );
 }
