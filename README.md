@@ -9,11 +9,25 @@
 * **Information Retrieval:** Get summaries, key points, and specific details highlighted within the PDF.
 * **Clarification and Insights:** Preve can clarify confusing passages and offer insights based on the document's content.
 
+### **How to Use Preve:**
+
+1. **Upload your PDF:** Drag and drop your file or use the upload button.
+2. **Start Chatting:** Type your question in the chat window.
+3. **Get Answers:** Preve will analyze your document and provide relevant information.
+
+### **Preve is perfect for:**
+
+* Students researching for assignments
+* Professionals reviewing contracts and reports
+* Anyone who needs to quickly understand the content of a PDF
+
 
 ### **Tech Stack:**
 
 - Nextjs
 - Uploadthing
+- Postgres
+- Prisma
 - Tailwind
 - Clerk
 - Gemini 
