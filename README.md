@@ -2,7 +2,15 @@
 </h1>
  <img width="1000" alt="header image" src="/header.png">
 
-### Features
+### **Key Features:**
+
+* **Upload PDFs:** Simply drag and drop your PDF files into Preve to get started.
+* **Conversational AI:** Ask Preve questions about your document.
+* **Information Retrieval:** Get summaries, key points, and specific details highlighted within the PDF.
+* **Clarification and Insights:** Preve can clarify confusing passages and offer insights based on the document's content.
+
+
+### **Tech Stack:**
 
 - Nextjs
 - Uploadthing
@@ -10,7 +18,7 @@
 - Clerk
 - Gemini 
 
-### Setting up locally
+### **Setting up locally**
 
 ```bash
 npm install
