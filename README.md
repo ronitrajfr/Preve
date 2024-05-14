@@ -5,9 +5,10 @@
 ### Features
 
 - Nextjs
-- Next Auth
+- Uploadthing
+- Tailwind
 - Clerk
-- Gemini Api
+- Gemini 
 
 ### Setting up locally
 
@@ -15,12 +16,9 @@
 npm install
 ```
 
-Create a `.env` file, then add the PostgreSQL env (you can get one for free from NeonDB) and grab the Gemini env.
+Change `.env.example` to `.env` and `.env.local.example` to `.env.local` , then add the PostgreSQL url (you can get one for free from NeonDB) and clerk & uploadthing keys and grab the Gemini api key.
 
-```bash
-npm run build
-```
-
+And then run :
 ```bash
 npm run dev
 ```
