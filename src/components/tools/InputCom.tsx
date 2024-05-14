@@ -131,19 +131,19 @@ export function InputCom({ content }: InputComProps): JSX.Element {
         </div>
       </center>
       <center>
-        <div className="px-4 pt-4 mx-auto">
+        <div className="px-4 pt-4 mx-auto flex items-center justify-center">
           <input
             type="text"
             value={input}
             onKeyDown={handleKeyDown}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Start Chatting..."
-            className=" shadow bg-gray-50 border-2 border-orange-400 text-black text-sm rounded-lg focus:border-orange-500 p-2.5 w-[400px] md:w-[700px] "
+            className="shadow bg-gray-50 border-2 border-orange-400 text-black text-sm rounded-lg focus:border-orange-500 p-2.5 w-[300px] sm:w-[450px] md:w-[750px]"
             style={{ marginBottom: "10px" }}
           />
           <button
             onClick={handleSend}
-            className="bg-orange-400 text-white p-2.5 rounded-lg ml-2"
+            className="bg-orange-400 text-white p-2.5 rounded-lg mb-2 ml-2"
           >
             Send
           </button>
