@@ -26,7 +26,7 @@ export default function Home() {
             color: "red",
           },
         }}
-        className="mt-72 max-sm:mt-60 mx-auto w-[70vh] "
+        className="mt-72 max-sm:mt-60 mx-auto w-[330px] sm:w-[450px] md:w-[750px] "
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
           // Do something with the response
