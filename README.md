@@ -9,7 +9,7 @@
 - Clerk
 - Gemini Api
 
-### Local Setup
+### Setting up locally
 ```bash
 npm install
 ```
