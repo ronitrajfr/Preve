@@ -35,6 +35,7 @@
 ### **Setting up locally**
 
 ```bash
+cd preve
 npm install
 ```
 
