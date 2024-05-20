@@ -35,6 +35,7 @@
 ### **Setting up locally**
 
 ```bash
+git clone https://github.com/rrajofficial7/Preve.git
 cd preve
 npm install
 ```
