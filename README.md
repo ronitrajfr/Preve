@@ -1,49 +1,29 @@
-<h1 align="center">Say Hello to <a href="https://preve.onrender.com/">Preve</a>
-</h1>
- <img width="1000" alt="header image" src="/header.png">
- 
+# Create T3 App
 
-### **Key Features:**
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-* **Upload PDFs:** Simply drag and drop your PDF files into Preve to get started.
-* **Conversational AI:** Ask Preve questions about your document.
-* **Information Retrieval:** Get summaries, key points, and specific details highlighted within the PDF.
-* **Clarification and Insights:** Preve can clarify confusing passages and offer insights based on the document's content.
+## What's next? How do I make an app with this?
 
-### **How to Use Preve:**
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-1. **Upload your PDF:** Drag and drop your file or use the upload button.
-2. **Start Chatting:** Type your question in the chat window.
-3. **Get Answers:** Preve will analyze your document and provide relevant information.
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-### **Preve is perfect for:**
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Drizzle](https://orm.drizzle.team)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-* Students researching for assignments
-* Professionals reviewing contracts and reports
-* Anyone who needs to quickly understand the content of a PDF
+## Learn More
 
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-### **Tech Stack:**
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-- Nextjs
-- Uploadthing
-- Postgres
-- Prisma
-- Tailwind
-- Clerk
-- Gemini 
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-### **Setting up locally**
+## How do I deploy this?
 
-```bash
-git clone https://github.com/ronitrajfr/Preve.git
-cd preve
-npm install
-```
-
-Change `.env.example` to `.env` and `.env.local.example` to `.env.local` , then add the PostgreSQL url (you can get one for free from NeonDB) and clerk & uploadthing keys and grab the Gemini api key.
-
-And then run :
-```bash
-npm run dev
-```
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
